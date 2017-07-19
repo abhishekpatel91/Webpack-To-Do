@@ -1,5 +1,5 @@
 import _ from 'lodash';
-// var css = require('./app/less/main.less'); 
+import $ from 'jquery';
 
 export class ToDo {
     constructor(name, formElm, tableElm) {

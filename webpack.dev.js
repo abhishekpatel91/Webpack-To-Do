@@ -1,9 +1,13 @@
 var path = require('path');
+var webpack = require('webpack');
 
 module.exports = {
-    entry: path.join(__dirname, 'app', 'js', 'main.js'),
+    entry: {
+        vendor: ['jquery', 'lodash'],
+        main: path.join(__dirname, 'app', 'js', 'main.js')
+    },
     output: {
-        filename: 'bundle.js',
+        filename: '[name].js',
         path: path.resolve(__dirname, 'app', 'dist')
     },
     stats: {
@@ -15,6 +19,11 @@ module.exports = {
         port: 9000,
         contentBase: path.join(__dirname, 'app')
     },
+    plugins: [
+        new webpack.optimize.CommonsChunkPlugin({
+            name: 'vendor'
+        })
+    ],
     module: {
         rules: [{
             test: /\.js$/,

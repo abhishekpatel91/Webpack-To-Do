@@ -1,10 +1,14 @@
 var path = require('path');
+var webpack = require('webpack');
 var UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
 module.exports = {
-    entry: path.join(__dirname, 'app', 'js', 'main.js'),
+    entry: {
+        vendor: ['jquery', 'lodash'],
+        main: path.join(__dirname, 'app', 'js', 'main.js')
+    },
     output: {
-        filename: 'bundle.js',
+        filename: '[name].js',
         path: path.resolve(__dirname, 'app', 'dist')
     },
     stats: {
@@ -13,6 +17,9 @@ module.exports = {
         chunks: true
     },
     plugins: [
+        new webpack.optimize.CommonsChunkPlugin({
+            name: 'vendor'
+        }),
         new UglifyJsPlugin()
     ],
     module: {
